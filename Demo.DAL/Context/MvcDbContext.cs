@@ -10,6 +10,11 @@ namespace Demo.DAL.Context
 {
     public class MvcDbContext : DbContext
     {
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfigurationsFromAssembly(System.Reflection.Assembly.GetExecutingAssembly());
+            base.OnModelCreating(modelBuilder);
+        }
         public MvcDbContext(DbContextOptions<MvcDbContext> options):base(options) { }
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
@@ -17,5 +22,7 @@ namespace Demo.DAL.Context
           
         //}
         public DbSet<Department> Departments { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+
     }
 }
