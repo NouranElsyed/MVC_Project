@@ -1,6 +1,7 @@
 ﻿using Demo.BLL.Interfaces;
 using Demo.BLL.Repositories;
 using Demo.DAL.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System.Runtime.InteropServices;
 
@@ -9,11 +10,12 @@ namespace Demo.PL.Controllers
     public class DepartmentController : Controller
     {
         private readonly IDepartmentRepository _departmentRepository;
+        private readonly IWebHostEnvironment _env;
 
-        public DepartmentController(IDepartmentRepository departmentRepository) 
+        public DepartmentController(IDepartmentRepository departmentRepository,IWebHostEnvironment env) 
         {
             _departmentRepository = departmentRepository;
-
+            _env = env;
         }
         public IActionResult Index()
         {
