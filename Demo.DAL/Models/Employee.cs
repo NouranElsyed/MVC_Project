@@ -47,6 +47,9 @@ namespace Demo.DAL.Models
         public Gender Gender { get; set; }
         [Display(Name = "Employee Type")]
         public EmployeeType EmployeeType { get; set; }
+        
+        public int? departmentId { get; set; }//fk
+        public Department? department { get; set; }
 
 
     }
