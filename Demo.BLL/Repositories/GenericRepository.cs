@@ -1,6 +1,7 @@
 ﻿using Demo.BLL.Interfaces;
 using Demo.DAL.Context;
 using Demo.DAL.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,20 @@ namespace Demo.BLL.Repositories
             return _dbContext.SaveChanges();
         }
 
-        public IEnumerable<T> GetAll()=> _dbContext.Set<T>().ToList();
+        public IEnumerable<T> GetAll(){
+            if (typeof(T) == typeof(Employee))
+            {
+                return (IEnumerable<T>)_dbContext.Employees.Include(E => E.department).AsNoTracking().ToList();
+            }
+            else
+            {
+                return _dbContext.Set<T>().AsNoTracking().ToList();
+            }
+
+        }
+
+
+
         public T GetById(int id) => _dbContext.Find<T>(id);
 
         public int Update(T item)

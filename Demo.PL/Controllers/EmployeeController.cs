@@ -12,20 +12,26 @@ namespace Demo.PL.Controllers
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IWebHostEnvironment _env;
+        //private readonly IDepartmentRepository _departmentRepository;
 
-        public EmployeeController(IEmployeeRepository employeeRepository,IWebHostEnvironment env)
+        public EmployeeController(IEmployeeRepository employeeRepository,IWebHostEnvironment env/*,IDepartmentRepository departmentRepository*/)
         {
             _employeeRepository = employeeRepository;
             _env = env;
+            //_departmentRepository = departmentRepository;
         }
         public IActionResult Index()
         {
+            //ViewBag["Message"] = "hello viewbag";
+            //ViewBag.Message = "hello viewbag";
+            TempData.Keep();
             var Employees = _employeeRepository.GetAll();   
             return View(Employees);
         }
         [HttpGet]
         public IActionResult Create()
         {
+           // ViewData["departments"] = _departmentRepository.GetAll();
             return View();
         }
         [HttpPost]
@@ -33,7 +39,17 @@ namespace Demo.PL.Controllers
         {
             if (ModelState.IsValid) 
             {
-                _employeeRepository.Add(employee);
+                var count =_employeeRepository.Add(employee);
+                if (count > 0)
+                {
+                    TempData["Message"] = "Employee created successfully";
+                }
+                else 
+                {
+                    TempData["Message"] = "An Error occured";
+
+                }
+                
                 return RedirectToAction(nameof(Index));
             }
             return View();
@@ -53,6 +69,7 @@ namespace Demo.PL.Controllers
             if (id is null) { return BadRequest(); }
 
             var employee = _employeeRepository.GetById(id.Value);
+            //ViewData["departments"] = _departmentRepository.GetAll();
             if (employee is null) { return NotFound(); }
             return View(employee);
         }

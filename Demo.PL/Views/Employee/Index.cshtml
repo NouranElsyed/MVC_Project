@@ -5,6 +5,12 @@
 
 
 <a asp-controller="Employee" asp-action="Create" class="btn btn-primary">Create Employee</a>
+@if (TempData["Message"]!=null)
+{
+    <p class="alert alert-info text-black">@TempData["Message"]</p>
+}
+
+
 <br />
 <br />
 
@@ -16,6 +22,7 @@
             <tr>
                 <th>@Html.DisplayNameFor(E=>E.Name)</th>
                 <th>@Html.DisplayNameFor(E=>E.Age)</th>
+                <th>@Html.DisplayNameFor(E=>E.department)</th>
                 <th>@Html.DisplayNameFor(E=>E.Address)</th>
                 <th>@Html.DisplayNameFor(E => E.Email)</th>
                 <th>@Html.DisplayNameFor(E => E.PhoneNumber)</th>
@@ -33,6 +40,7 @@
                 <tr>
                     <td>@employee.Name</td>
                     <td>@employee.Age</td>
+                    <td>@employee.department?.Name</td>
                     <td>@employee.Address</td>
                     <td>@employee.Email</td>
                     <td>@employee.PhoneNumber</td>
