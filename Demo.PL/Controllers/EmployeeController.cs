@@ -3,6 +3,7 @@ using Demo.BLL.Repositories;
 using Demo.DAL.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 
@@ -20,12 +21,19 @@ namespace Demo.PL.Controllers
             _env = env;
             //_departmentRepository = departmentRepository;
         }
-        public IActionResult Index()
+        public IActionResult Index(string InputSearch)
         {
+            var Employees = Enumerable.Empty<Employee>();
+            if (string.IsNullOrEmpty(InputSearch)) 
+            {
+                Employees = _employeeRepository.GetAll();
+            } else {
+                Employees = _employeeRepository.GetEmployeeByAddress(InputSearch);
+            }
             //ViewBag["Message"] = "hello viewbag";
             //ViewBag.Message = "hello viewbag";
             TempData.Keep();
-            var Employees = _employeeRepository.GetAll();   
+             Employees = _employeeRepository.GetAll();   
             return View(Employees);
         }
         [HttpGet]
