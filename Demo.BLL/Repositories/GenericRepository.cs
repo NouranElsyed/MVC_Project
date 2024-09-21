@@ -41,8 +41,6 @@ namespace Demo.BLL.Repositories
 
         }
 
-
-
         public T GetById(int id) => _dbContext.Find<T>(id);
 
         public int Update(T item)

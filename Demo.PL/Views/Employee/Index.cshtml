@@ -3,11 +3,21 @@
     ViewData["Title"] = "All Employees";
 }
 
+<form  asp-action="Index">
+    <div class="row my-2">
+        <div class="col-8">
+            <input type="text" name="InputSearch" class="form-control" />
+        </div>
+        <div class="col-4">
+        <input type="submit" value="Search" class="btn btn-success"/>
+        </div>
 
+    </div>
+</form>
 <a asp-controller="Employee" asp-action="Create" class="btn btn-primary">Create Employee</a>
 @if (TempData["Message"]!=null)
 {
-    <p class="alert alert-info text-black">@TempData["Message"]</p>
+    <p class="alert alert-info text-black" id="tempMessage">@TempData["Message"]</p>
 }
 
 
@@ -74,4 +84,12 @@ else
         <h4> There is No Emplyee :( </h4>
     </div>
 }
-
+<script>
+   
+    $(document).ready(function () {
+       
+        setTimeout(function () {
+            $("#tempMessage").fadeOut(2000);
+        }, 5000); 
+    });
+</script>
