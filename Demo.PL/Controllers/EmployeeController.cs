@@ -28,12 +28,12 @@ namespace Demo.PL.Controllers
             {
                 Employees = _employeeRepository.GetAll();
             } else {
-                Employees = _employeeRepository.GetEmployeeByAddress(InputSearch);
+                Employees = _employeeRepository.GetEmployeeByName(InputSearch.ToLower());
             }
             //ViewBag["Message"] = "hello viewbag";
             //ViewBag.Message = "hello viewbag";
             TempData.Keep();
-             Employees = _employeeRepository.GetAll();   
+             //Employees = _employeeRepository.GetAll();   
             return View(Employees);
         }
         [HttpGet]
