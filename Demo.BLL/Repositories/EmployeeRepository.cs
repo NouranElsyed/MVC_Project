@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,6 +22,12 @@ namespace Demo.BLL.Repositories
             return _dbContext.Employees
                     .Where(e => e.Address.ToLower().Contains(address.ToLower()))
                     .Include(E=>E.department);
+        }
+
+        public IQueryable<Employee> GetEmployeeByName(string name)
+        {
+            return _dbContext.Employees
+                 .Where(e => e.Name.ToLower().Contains(name.ToLower()));
         }
     }
 }

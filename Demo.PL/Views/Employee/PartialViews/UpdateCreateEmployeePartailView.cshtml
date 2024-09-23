@@ -1,8 +1,8 @@
 ﻿@model Employee;
 @inject IDepartmentRepository _departmentRepo;
 @{
-    ViewData["departments"] = _departmentRepo.GetAll();
-    var departments = new SelectList(@ViewData["departments"] as IEnumerable<Department>, nameof(Department.Id), nameof(Department.Name));
+    // ViewData["departments"] = _departmentRepo.GetAll();
+    var departments = new SelectList(_departmentRepo.GetAll() as IEnumerable<Department>, nameof(Department.Id), nameof(Department.Name));
     // var dept = ViewData["departments"] as IEnumerable<Department>;
 }
 @*
@@ -63,7 +63,7 @@
      </section></div>  *@
     <div class="form-group">
         <label asp-for="department" class="col-form-label"></label>
-        <select asp-for="department" asp-items="@departments" class="form-control">
+        <select asp-for="departmentId" asp-items="@departments" class="form-control">
             <option value="@null">-- Select Department --</option>
         </select>
     <span asp-validation-for="department" class="text-danger"></span>
