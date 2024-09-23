@@ -9,7 +9,7 @@
 
 <h1>Employee @Model.Name Update</h1>
 <div asp-validation-summary="All"></div>
-<form asp-action="Update">
+<form asp-action="Update" enctype="multipart/form-data">
     <partial name="PartialViews/UpdateCreateEmployeePartailView"></partial>
     <input type="submit" value="Save" class="btn btn-primary" />
     <a asp-controller="Department" asp-action="Index" class="btn btn-light">Back To List</a>

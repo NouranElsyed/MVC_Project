@@ -20,7 +20,7 @@ namespace Demo.PL.Models
     }
     public class EmployeeViewModel 
     {
-
+        public int Id { get; set; }
         [Required(ErrorMessage = "Name is required")]
         [MaxLength(25, ErrorMessage = "Max Name Length 25 characters")]
         [MinLength(5, ErrorMessage = "Max Name Length 5 characters")]
