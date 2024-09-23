@@ -16,6 +16,7 @@ namespace Demo.PL.Helper
             string FilePath = Path.Combine(folderPath, FileName);
             //4.Save File As Streams
             var FS = new FileStream(FilePath,FileMode.Create);
+            file.CopyTo(FS);
             //5.Return file name
             return FilePath;
         }

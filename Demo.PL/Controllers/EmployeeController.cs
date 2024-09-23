@@ -2,6 +2,7 @@
 using Demo.BLL.Interfaces;
 using Demo.BLL.Repositories;
 using Demo.DAL.Models;
+using Demo.PL.Helper;
 using Demo.PL.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -55,6 +56,7 @@ namespace Demo.PL.Controllers
         {
             if (ModelState.IsValid) 
             {
+                employeeVM.ImageName = DocumentSettings.UploadFile(employeeVM.Image,"Images");
                 var EmployeeMapped = _mapper.Map<EmployeeViewModel, Employee>(employeeVM);
 
                 var count =_employeeRepository.Add(EmployeeMapped);
@@ -78,7 +80,9 @@ namespace Demo.PL.Controllers
 
             var employee = _employeeRepository.GetById(id.Value);
             if (employee is null) { return NotFound(); }
-            return View(ViewName, employee);
+            var EmployeeMapped = _mapper.Map<Employee,EmployeeViewModel>(employee);
+
+            return View(ViewName, EmployeeMapped);
 
         }
         [HttpGet]
@@ -89,16 +93,22 @@ namespace Demo.PL.Controllers
             var employee = _employeeRepository.GetById(id.Value);
             //ViewData["departments"] = _departmentRepository.GetAll();
             if (employee is null) { return NotFound(); }
-            return View(employee);
+            var EmployeeMapped = _mapper.Map<Employee, EmployeeViewModel>(employee);
+
+            return View(EmployeeMapped);
         }
         [HttpPost]
-        public IActionResult Update(Employee employee, [FromRoute] int id)
+        public IActionResult Update(EmployeeViewModel employeeVM, [FromRoute] int id)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _employeeRepository.Update(employee);
+                    employeeVM.ImageName = DocumentSettings.UploadFile(employeeVM.Image, "Images");
+
+                    var EmployeeMapped = _mapper.Map<EmployeeViewModel,Employee>(employeeVM);
+
+                    _employeeRepository.Update(EmployeeMapped);
                     return RedirectToAction(nameof(Index));
                 }
                 catch (System.Exception ex)
@@ -106,7 +116,7 @@ namespace Demo.PL.Controllers
                     ModelState.AddModelError(string.Empty, ex.Message);
                 }
             }
-            return View(employee);
+            return View(employeeVM);
         }
 
         public IActionResult Delete(int? id)
@@ -114,20 +124,23 @@ namespace Demo.PL.Controllers
             return Details(id, "Delete");
         }
         [HttpPost]
-        public IActionResult Delete(Employee employee, [FromRoute] int id)
+        public IActionResult Delete(EmployeeViewModel employeeVM, [FromRoute] int id)
         {
-            if ((id != employee.Id))
+            var EmployeeMapped = _mapper.Map<EmployeeViewModel, Employee>(employeeVM);
+
+            if ((id != EmployeeMapped.Id))
             { return BadRequest(); }
             try
             {
-                _employeeRepository.Delete(employee);
+
+                _employeeRepository.Delete(EmployeeMapped);
                 return RedirectToAction(nameof(Index));
             }
             catch (System.Exception ex)
             {
                 ModelState.AddModelError(string.Empty, ex.Message);
             }
-            return View(employee );
+            return View(employeeVM);
         }
 
     }
