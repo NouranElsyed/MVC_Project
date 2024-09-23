@@ -1,8 +1,12 @@
-﻿using Demo.BLL.Interfaces;
+﻿using AutoMapper;
+using Demo.BLL.Interfaces;
 using Demo.BLL.Repositories;
 using Demo.DAL.Models;
+using Demo.PL.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 
@@ -13,12 +17,16 @@ namespace Demo.PL.Controllers
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IWebHostEnvironment _env;
+        private readonly IMapper _mapper;
+
         //private readonly IDepartmentRepository _departmentRepository;
 
-        public EmployeeController(IEmployeeRepository employeeRepository,IWebHostEnvironment env/*,IDepartmentRepository departmentRepository*/)
+        public EmployeeController(IEmployeeRepository employeeRepository,IWebHostEnvironment env/*,IDepartmentRepository departmentRepository*/,IMapper mapper)
         {
             _employeeRepository = employeeRepository;
             _env = env;
+            _mapper = mapper;
+
             //_departmentRepository = departmentRepository;
         }
         public IActionResult Index(string InputSearch)
@@ -33,8 +41,8 @@ namespace Demo.PL.Controllers
             //ViewBag["Message"] = "hello viewbag";
             //ViewBag.Message = "hello viewbag";
             TempData.Keep();
-             //Employees = _employeeRepository.GetAll();   
-            return View(Employees);
+            var EmployeeMapped = _mapper.Map<IEnumerable<Employee>, IEnumerable<EmployeeViewModel> >(Employees);
+            return View(EmployeeMapped);
         }
         [HttpGet]
         public IActionResult Create()
@@ -43,11 +51,13 @@ namespace Demo.PL.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(Employee employee)
+        public IActionResult Create(EmployeeViewModel employeeVM)
         {
             if (ModelState.IsValid) 
             {
-                var count =_employeeRepository.Add(employee);
+                var EmployeeMapped = _mapper.Map<EmployeeViewModel, Employee>(employeeVM);
+
+                var count =_employeeRepository.Add(EmployeeMapped);
                 if (count > 0)
                 {
                     TempData["Message"] = "Employee created successfully";

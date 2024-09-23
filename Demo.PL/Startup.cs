@@ -1,6 +1,7 @@
 using Demo.BLL.Interfaces;
 using Demo.BLL.Repositories;
 using Demo.DAL.Context;
+using Demo.PL.MappingProfiles;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -35,6 +36,7 @@ namespace Demo.PL
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 
             services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            services.AddAutoMapper(M=>M.AddProfile(new EmployeeProfile()));
 
         }
 
