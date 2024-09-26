@@ -6,6 +6,10 @@
 
 <h1>Create New Employee</h1>
 <form asp-action="Create" enctype="multipart/form-data">
+    <div class="form-group">
+        <label asp-for="Image" class="col-form-label"></label>
+        <input asp-for="Image" class="form-control-file" />
+    </div>
     <partial name="PartialViews/UpdateCreateEmployeePartailView"></partial>
 
     <input type="submit" value="Create" class="btn btn-primary" />

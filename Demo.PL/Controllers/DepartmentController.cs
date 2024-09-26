@@ -1,25 +1,29 @@
 ﻿using Demo.BLL.Interfaces;
 using Demo.BLL.Repositories;
 using Demo.DAL.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace Demo.PL.Controllers
 {
+    [Authorize]
     public class DepartmentController : Controller
     {
-        private readonly IDepartmentRepository _departmentRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _env;
 
-        public DepartmentController(IDepartmentRepository departmentRepository,IWebHostEnvironment env) 
+        public DepartmentController( IUnitOfWork unitOfWork,IWebHostEnvironment env) 
         {
-            _departmentRepository = departmentRepository;
+  
+            _unitOfWork = unitOfWork;
             _env = env;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var department = _departmentRepository.GetAll();
+            var department = await _unitOfWork.departmentRepository.GetAllAsync();
             return View(department);
         }
         [HttpGet]
@@ -28,41 +32,43 @@ namespace Demo.PL.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(Department department)
+        public async Task<IActionResult> Create(Department department)
         {
             if (ModelState.IsValid) 
             {
-                _departmentRepository.Add(department);
+                await _unitOfWork.departmentRepository.AddAsync(department);
+                await _unitOfWork.completeAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(department);
         }
-        public IActionResult Details(int? id,string ViewName = "Details") 
+        public async Task<IActionResult> Details(int? id,string ViewName = "Details") 
         {
             if (id is null) { return BadRequest(); }
 
-            var department = _departmentRepository.GetById(id.Value);
+            var department = await _unitOfWork.departmentRepository.GetByIdAsync(id.Value);
             if (department is null) { return NotFound(); }
             return View(ViewName,department);
 
         }
         [HttpGet]
-        public IActionResult Update(int? id)
+        public async  Task<IActionResult> Update(int? id)
         {
             if (id is null) { return BadRequest(); }
 
-            var department = _departmentRepository.GetById(id.Value);
+            var department = await _unitOfWork.departmentRepository.GetByIdAsync(id.Value);
             if (department is null) { return NotFound(); }
             return View(department);
         }
         [HttpPost]
-        public IActionResult Update(Department department, [FromRoute] int id)
+        public async Task<IActionResult> Update(Department department, [FromRoute] int id)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _departmentRepository.Update(department);
+                    _unitOfWork.departmentRepository.Update(department);
+                    await _unitOfWork.completeAsync();
                     return RedirectToAction(nameof(Index));
                 }
                 catch(System.Exception ex)
@@ -73,18 +79,19 @@ namespace Demo.PL.Controllers
             return View(department);
         }
       
-        public IActionResult Delete(int? id) 
+        public Task<IActionResult> Delete(int? id) 
         {
             return Details(id,"Delete");
         }
         [HttpPost]
-        public IActionResult Delete(Department department, [FromRoute] int id) 
+        public async Task<IActionResult> Delete(Department department, [FromRoute] int id) 
         {
                 if ((id != department.Id))
                 { return BadRequest(); }
                 try
                 {
-                    _departmentRepository.Delete(department);
+                    _unitOfWork.departmentRepository.Delete(department);
+                    await  _unitOfWork.completeAsync();
                     return RedirectToAction(nameof(Index));
                 }
                 catch (System.Exception ex)
