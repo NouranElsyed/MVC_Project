@@ -10,6 +10,16 @@
 <h1>Employee @Model.Name Update</h1>
 <div asp-validation-summary="All"></div>
 <form asp-action="Update" enctype="multipart/form-data">
+    <div class="form-group">
+        <img src="~/files/Images/@Model.ImageName" class="rounded-circle" width="100px" alt="" />
+        <img src="" class="rounded-circle" width="100px" alt="" />
+
+        <input asp-for="ImageName" hidden />
+    </div>
+    <div class="form-group">
+        <label class="col-form-label">Change Photo:</label>
+        <input asp-for="Image" class="form-control-file" />
+    </div>
     <partial name="PartialViews/UpdateCreateEmployeePartailView"></partial>
     <input type="submit" value="Save" class="btn btn-primary" />
     <a asp-controller="Department" asp-action="Index" class="btn btn-light">Back To List</a>

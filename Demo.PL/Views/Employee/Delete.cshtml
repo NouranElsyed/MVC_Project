@@ -4,8 +4,12 @@
 }
 
 
-<h1>Are you sure that you want to delete @Model.Name </h1>
+<h1>Are you sure that you want to delete @Model.Name ?</h1>
 <form asp-action="Delete">
+    <div class="form-group">
+        <img src="~\files\Images\@Model.ImageName" class="rounded-circle" width="100px" alt="" />
+        <input asp-for="ImageName" hidden />
+    </div>
     <div class="form-group">
         <label asp-for="Name" class="col-form-label"></label>
         <input readonly asp-for="Name" class="form-control" />

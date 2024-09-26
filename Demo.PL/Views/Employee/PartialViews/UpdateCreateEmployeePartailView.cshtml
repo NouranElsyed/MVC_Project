@@ -2,16 +2,13 @@
 @inject IDepartmentRepository _departmentRepo;
 @{
     // ViewData["departments"] = _departmentRepo.GetAll();
-    var departments = new SelectList(_departmentRepo.GetAll() as IEnumerable<Department>, nameof(Department.Id), nameof(Department.Name));
+    var departments = new SelectList(_departmentRepo.GetAllAsync().Result as IEnumerable<Department>, nameof(Department.Id), nameof(Department.Name));
     // var dept = ViewData["departments"] as IEnumerable<Department>;
 }
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
-<div class="form-group">
-    <label asp-for="Image" class="col-form-label"></label>
-    <input asp-for="Image" class="form-control" />
-</div>
+
 <div class="form-group">
     <label asp-for="Name" class="col-form-label"></label>
     <input asp-for="Name" class="form-control" />

@@ -4,10 +4,11 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
 
-<h1>Employee @Model.Name Details</h1>
+<h1>@Model.Name Details</h1>
+
 <div>
+    <img src="~/files/Images/@Model.ImageName" alt="" />
     <div class="form-group">
         <label asp-for="Name" class="col-form-label"></label>
         <input readonly asp-for="Name" class="form-control" />

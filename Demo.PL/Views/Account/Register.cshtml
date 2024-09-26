@@ -1,0 +1,58 @@
+﻿@model RegisterViewModels;
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
+}
+
+<section class="signup">
+    <div class="container">
+        <div class="signup-content">
+            <div class="signup-form">
+                <h2 class="form-title">Sign up</h2>
+                <div asp-validation-summary="All" class="text-denger"></div>
+                <form asp-action="Register" class="register-form" id="register-form">
+                    <div class="form-group">
+                        <label asp-for="Name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                        <input asp-for="Name" id="name" placeholder="Your Name" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email"><i class="zmdi zmdi-email"></i></label>
+                        <input asp-for="Email" id="email" placeholder="Your Email" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password"><i class="zmdi zmdi-lock"></i></label>
+                        <input asp-for="Password" id="pass" placeholder="Password" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="RepeatPassword"><i class="zmdi zmdi-lock-outline"></i></label>
+                        <input asp-for="RepeatPassword" id="re_pass" placeholder="Repeat your password" />
+                        <span asp-validation-for="RepeatPassword" class="text-danger"></span>
+
+                    </div>
+                    <div class="form-group">
+                        <input asp-for="IAgree" id="agree-term" class="agree-term" />
+                        <label asp-for="IAgree" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
+                    </div>
+                    <div class="form-group form-button">
+                        <input type="submit" name="signup" id="signup" class="form-submit" value="Register" />
+                    </div>
+                </form>
+            </div>
+            <div class="signup-image">
+                <figure><img src="~/images/signup-image.jpg" alt="sing up image"></figure>
+                <a asp-action="Login" class="signup-image-link">I am already member</a>
+            </div>
+        </div>
+    </div>
+</section>
+@section Validation
+{
+    <partial name="_ValidationScriptsPartial" />
+}
+

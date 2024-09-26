@@ -1,4 +1,6 @@
 ﻿using Demo.DAL.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Demo.DAL.Context
 {
-    public class MvcDbContext : DbContext
+    public class MvcDbContext : IdentityDbContext<ApplicationUser>
     {
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -23,6 +25,8 @@ namespace Demo.DAL.Context
         //}
         public DbSet<Department> Departments { get; set; }
         public DbSet<Employee> Employees { get; set; }
+  
+
 
     }
 }
