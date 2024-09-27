@@ -108,11 +108,14 @@ namespace Demo.PL.Controllers
             {
                 try
                 {
-                    employeeVM.ImageName = DocumentSettings.UploadFile(employeeVM.Image, "Images");
-
+                    if (employeeVM.ImageName is null)
+                    {
+                        employeeVM.ImageName = DocumentSettings.UploadFile(employeeVM.Image, "Images");
+                    }
                     var EmployeeMapped = _mapper.Map<EmployeeViewModel,Employee>(employeeVM);
 
                     _unitOfWork.employeeRepository.Update(EmployeeMapped);
+
                     await _unitOfWork.completeAsync();
                     return RedirectToAction(nameof(Index));
                 }

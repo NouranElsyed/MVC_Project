@@ -81,7 +81,7 @@ namespace Demo.PL
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Account}/{action=Login}");
+                    pattern: "{controller=Account}/{action=Login}/{id?}");
             });
         }
     }

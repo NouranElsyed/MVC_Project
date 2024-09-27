@@ -54,15 +54,18 @@ namespace Demo.PL.Controllers
         [HttpGet]
         public async  Task<IActionResult> Update(int? id)
         {
-            if (id is null) { return BadRequest(); }
+            //if (id is null) { return BadRequest(); }
 
-            var department = await _unitOfWork.departmentRepository.GetByIdAsync(id.Value);
-            if (department is null) { return NotFound(); }
-            return View(department);
+            //var department = await _unitOfWork.departmentRepository.GetByIdAsync(id.Value);
+            //if (department is null) { return NotFound(); }
+            return await Details(id, "Update");// View(department);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(Department department, [FromRoute] int id)
         {
+            if (id != department.Id) { return BadRequest(); }
+
             if (ModelState.IsValid)
             {
                 try
@@ -79,9 +82,9 @@ namespace Demo.PL.Controllers
             return View(department);
         }
       
-        public Task<IActionResult> Delete(int? id) 
+        public async Task<IActionResult> Delete(int? id) 
         {
-            return Details(id,"Delete");
+            return await Details(id,"Delete");
         }
         [HttpPost]
         public async Task<IActionResult> Delete(Department department, [FromRoute] int id) 
@@ -97,8 +100,9 @@ namespace Demo.PL.Controllers
                 catch (System.Exception ex)
                 {
                     ModelState.AddModelError(string.Empty, ex.Message);
-                }
-            return View(department);
+                return View(department);
+            }
+
         }
 
     }
