@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Demo.PL.Controllers
 {
@@ -34,21 +35,31 @@ namespace Demo.PL.Controllers
                         Roles = _userManager.GetRolesAsync(U).Result
 
                     }).ToListAsync();
+                return View(users);
+
             }
             else 
             {
                 var user = await _userManager.FindByEmailAsync(searchValue);
-                var MappedUser = new UserViewModel()
+                if (user == null) { user = await _userManager.FindByNameAsync(searchValue); }
+
+                if (user is not null)
                 {
-                    id = user.Id,
-                    Name = user.Name,
-                    Email = user.Email,
-                    PhoneNumber = user.PhoneNumber,
-                    Roles = _userManager.GetRolesAsync(user).Result
-                };
-                return View(new List <UserViewModel> { MappedUser });
+                    var MappedUser = new UserViewModel()
+                    {
+                        id = user.Id,
+                        Name = user.Name,
+                        Email = user.Email,
+                        PhoneNumber = user.PhoneNumber,
+                        Roles = _userManager.GetRolesAsync(user).Result
+                    };
+                    return View(new List<UserViewModel> { MappedUser });
+
+                }
+                return View(new List<UserViewModel> ());
+
             }
-            return View();
+
         }
         public async Task<IActionResult> Details(string Id, string viewName = "Detils") 
         {

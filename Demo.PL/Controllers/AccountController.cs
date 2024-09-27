@@ -2,7 +2,9 @@
 using Demo.PL.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace Demo.PL.Controllers
@@ -17,6 +19,7 @@ namespace Demo.PL.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
         }
+        #region Register
         public IActionResult Register()
         {
             return View();
@@ -53,6 +56,8 @@ namespace Demo.PL.Controllers
 
 
         }
+        #endregion
+        #region Login
         public IActionResult Login()
         {
             return View();
@@ -86,5 +91,46 @@ namespace Demo.PL.Controllers
             return View(model);
 
         }
+        #endregion
+        #region SignOut
+        public new async Task<IActionResult> SignOut() 
+        {
+            await _signInManager.SignOutAsync();
+        return RedirectToAction(nameof(Login));
+        }
+        #endregion
+        #region ForgetPassword
+        public  /*async Task< */ IActionResult ForgetPassword()
+        {
+            return  View();
+        }
+        //[HttpPost]
+        //public async Task<IActionResult> SendEmail(ForgetPasswordViewModel model)
+        //{
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        var User = await _userManager.FindByEmailAsync(model.Email);
+        //        if (User is not null)
+        //        {
+        //            var email = new Email()
+        //            {
+        //                Subject="Reset Passwoed",
+        //                To = model.Email,
+        //                Body = "Link"
+        //            };
+        //        }
+        //        else
+        //        {
+        //            ModelState.AddModelError(string.Empty, "Email is not existed");
+        //        }
+
+        //    }
+        //    else {
+        //        return View("ForgetPassword", model); 
+        //    }
+        //}
+        #endregion
+
     }
 }

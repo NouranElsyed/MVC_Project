@@ -5,6 +5,7 @@
 <h1>Department @Model.Name Update</h1>
 <div asp-validation-summary="All"></div>
 <form asp-action="Update">
+    <input type="hidden" asp-for="Id" />
     <div class="form-group">
         <label asp-for="Code" class="col-form-label"></label>
         <input asp-for="Code" class="form-control" />
