@@ -12,10 +12,10 @@ namespace Demo.PL.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<IdentifyRole> _userManager;
+        private readonly SignInManager<IdentifyRole> _signInManager;
 
-        public AccountController(UserManager<ApplicationUser> userManager,SignInManager<ApplicationUser> signInManager) 
+        public AccountController(UserManager<IdentifyRole> userManager,SignInManager<IdentifyRole> signInManager) 
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -30,7 +30,7 @@ namespace Demo.PL.Controllers
         {
             if (ModelState.IsValid)
             {
-                var User = new ApplicationUser()
+                var User = new IdentifyRole()
                 {
                     UserName = model.Email.Split('@')[0],
                     Email = model.Email,
@@ -119,7 +119,7 @@ namespace Demo.PL.Controllers
                 {
                     Subject = "Reset Passwoed",
                     To = model.Email,
-                    Body = "Link"
+                    Body = ResetPasswordLink
                 };
                 EmailSettings.SendEmail(email);
                 return RedirectToAction(nameof(CheckYourInbox));

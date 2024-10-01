@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Demo.DAL.Context
 {
-    public class MvcDbContext : IdentityDbContext<ApplicationUser>
+    public class MvcDbContext : IdentityDbContext<IdentifyRole>
     {
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
