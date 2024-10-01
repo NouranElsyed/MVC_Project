@@ -1,0 +1,45 @@
+﻿@model UserViewModel;
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1> @Model.Name Update</h1>
+<div asp-validation-summary="All"></div>
+<form asp-action="Update" enctype="multipart/form-data">
+   @*  <div class="form-group">
+        <img src="~/files/Images/@Model.ImageName" class="rounded-circle" width="100px" alt="" />
+
+
+        <input asp-for="ImageName" hidden />
+    </div> *@
+@*     <div class="form-group">
+        <label asp-for="Image" class="col-form-label">Change Photo:</label>
+        <input asp-for="Image" class="form-control-file" />
+    </div> *@
+
+    <div class="form-group">
+        <label asp-for="Name" class="col-form-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PhoneNumber" class="col-form-label"></label>
+        <input asp-for="PhoneNumber" class="form-control" />
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Email" class="col-form-label"></label>
+        <input readonly asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+
+    </div>
+    <input type="submit" value="Save" class="btn btn-primary" />
+    <a asp-controller="User" asp-action="Index" class="btn btn-light">Back To List</a>
+</form>
+@section validation
+{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
+

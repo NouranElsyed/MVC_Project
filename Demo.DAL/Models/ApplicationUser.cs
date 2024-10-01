@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Demo.DAL.Models
 {
-    public class ApplicationUser:IdentityUser
+    public class IdentifyRole:IdentityUser
     {
         [Required]
         public string Name { get; set; }

@@ -40,8 +40,8 @@ namespace Demo.PL
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddScoped<IDepartmentRepository, DepartmentRepository>();
-            services.AddAutoMapper(M=>M.AddProfiles(new List<Profile>() {new EmployeeProfile() ,new UserProfile()}));
-            services.AddIdentity<ApplicationUser, IdentityRole>(options => 
+            services.AddAutoMapper(M=>M.AddProfiles(new List<Profile>() {new EmployeeProfile() ,new UserProfile(), new RoleProfile() }));
+            services.AddIdentity<IdentifyRole, IdentityRole>(options => 
             { 
                 options.Password.RequireNonAlphanumeric = true;
                 options.Password.RequireDigit = true;

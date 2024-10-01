@@ -95,7 +95,6 @@ namespace Demo.PL.Controllers
             if (id is null) { return BadRequest(); }
 
             var employee = await _unitOfWork.employeeRepository.GetByIdAsync(id.Value);
-            //ViewData["departments"] = _departmentRepository.GetAll();
             if (employee is null) { return NotFound(); }
             var EmployeeMapped = _mapper.Map<Employee, EmployeeViewModel>(employee);
 

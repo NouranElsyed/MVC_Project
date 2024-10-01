@@ -3,8 +3,6 @@
     ViewData["Title"] = "Update";
 }
 
-<h1>Update</h1>
-
 
 
 <h1>Employee @Model.Name Update</h1>
@@ -22,7 +20,7 @@
     </div>
     <partial name="PartialViews/UpdateCreateEmployeePartailView"></partial>
     <input type="submit" value="Save" class="btn btn-primary" />
-    <a asp-controller="Department" asp-action="Index" class="btn btn-light">Back To List</a>
+    <a asp-controller="Employee" asp-action="Index" class="btn btn-light">Back To List</a>
 </form>
 @section validation
 {

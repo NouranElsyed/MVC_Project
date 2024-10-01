@@ -1,0 +1,27 @@
+﻿@model UserViewModel;
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>Are sure to Delete @Model.Name? </h1>
+
+<form asp-action="Details">
+    @* <div class="form-group">
+    <img src="~\files\Images\@Model.ImageName" class="rounded-circle" width="100px" alt="" />
+    <input asp-for="ImageName" hidden />
+    </div> *@
+    <partial name="PartialViews/DetailsDeletePartialView"></partial>
+    @*  <div class="form-group">
+
+    <label asp-for="HiringDate" class="col-form-label"></label>
+    <input readonly asp-for="HiringDate" class="form-control" />
+    <span asp-validation-for="HiringDate" class="text-danger"></span>
+    </div> *@
+
+    <a asp-controller="User" asp-route-id="@Model.id" asp-action="ConfirmDelete" class="btn btn-warning">Delete</a>
+    <a asp-controller="User" asp-action="Index" class="btn btn-light">Back To List</a>
+</form>
+
+
+

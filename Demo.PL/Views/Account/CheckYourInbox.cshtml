@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewData["Title"] = "CheckYourInbox";
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
+}
+<section class="sign-in">
+    <div class="container">
+        <div class="signin-content">
+            <div class="signin-image">
+                <figure><img src="~/images/signin-image.jpg" alt="sing up image"></figure>
+                <a asp-action="Register" class="signup-image-link">Create an account</a>
+            </div>
+
+            <div class="signin-form">
+                <h2 class="form-title">Check Inbox</h2>
+
+                <p>Password Reset Link Has been sent to your Mail, Please check your inbox</p>
+                <a  href="https://mail.google.com/mail/u/0/">Go to your Inbox</a>
+
+            
+            </div>
+        </div>
+    </div>
+</section>
+
+
+   
+@section Validation
+{
+    <partial name="_ValidationScriptsPartial" />
+}

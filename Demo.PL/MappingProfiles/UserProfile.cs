@@ -6,6 +6,7 @@ namespace Demo.PL.MappingProfiles
 {
     public class UserProfile : Profile
     {
-        public UserProfile() { CreateMap<ApplicationUser, UserViewModel>(); }
+      
+        public UserProfile() { CreateMap<IdentifyRole, UserViewModel>().ReverseMap(); }
     }
 }
